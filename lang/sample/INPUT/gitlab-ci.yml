@@ -1,0 +1,38 @@
+image: java:8
+
+stages:
+  - build
+  - deploy
+  - deploy_staging
+  - deploy_production
+
+build:
+  stage: build
+  script: 
+  - cd ./spring-mvc-showcase2
+  - mvn clean package
+  artifacts:
+    paths:
+    - ./spring-mvc-showcase2/target/spring-mvc-showcase2.war
+
+deploy:
+  stage: deploy
+  script:
+  - cp ./spring-mvc-showcase2/target/spring-mvc-showcase2.war /engn001/apache-tomcat-8.5.27/webapps
+  environment:
+    name: dev
+  
+deploy_staging:
+  stage: deploy_staging
+  script:
+  - cp ./spring-mvc-showcase2/target/spring-mvc-showcase2.war /engn002/apache-tomcat-8.5.27/webapps
+  environment:
+    name: staging
+  
+deploy_production:
+  stage: deploy_production
+  script:
+  - cp ./spring-mvc-showcase2/target/spring-mvc-showcase2.war /engn002/apache-tomcat-8.5.27/webapps/spring-mvc-showcase-prod.war
+  environment:
+    name: production
+  when: manual
