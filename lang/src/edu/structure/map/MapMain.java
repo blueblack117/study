@@ -1,4 +1,4 @@
-package edu.structure;
+package edu.structure.map;
 
 import java.io.*;
 import java.util.HashMap;
